@@ -9,7 +9,8 @@ services:
     volumes:
       - ./app:/app
     command: >
-      sh -c "python manage.py migrate &&
+      sh -c "python manage.py wait_for_db &&
+             python manage.py migrate &&
              python manage.py runserver 0.0.0.0:8000"
     environment:
       - SECRET_KEY=123
@@ -24,8 +25,6 @@ services:
   db:
     image: postgres:10-alpine
     environment:
-      - DATABASE_NAME=covid_tracker
-      - DATABASE_USER=postgres
-      - DATABASE_PASSWORD=postgres
-      - DATABASE_HOST=db
-      - DATABASE_PORT=5432
+      - POSTGRES_DB=covid_tracker
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
