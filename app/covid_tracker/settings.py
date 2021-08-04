@@ -29,7 +29,7 @@ SECRET_KEY = env('SECRET_KEY')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = env.bool('DEBUG', default=False)
 
-ALLOWED_HOSTS = ['127.0.0.1', 'covid-tracker-anahuac-qa.herokuapp.com']
+ALLOWED_HOSTS = ['127.0.0.1', 'localhost', 'covid-tracker-anahuac-qa.herokuapp.com']
 
 
 # Application definition
@@ -61,7 +61,7 @@ ROOT_URLCONF = 'covid_tracker.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [os.path.join(BASE_DIR, 'templates/')],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -116,7 +116,7 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = 'en-us'
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = env.str('TIMEZONE', default='UTC')
 
 USE_I18N = True
 

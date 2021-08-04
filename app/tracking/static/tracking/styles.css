@@ -1,0 +1,56 @@
+html, body{
+    font-family: 'Roboto', sans-serif;
+}
+
+.a-header{
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    width: 75%;
+}
+
+.header{
+    font-weight: 500;
+    font-size: large;
+}
+
+.content{
+    margin-top: 5rem;
+    margin-bottom: 3rem;
+}
+
+h1{
+    font-weight: 900;
+    font-size: 30px;
+    color: #ff5900;
+}
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+input[type=number] {
+    -moz-appearance: textfield;
+}
+
+.btn-anahuac{
+    border: 2px solid #ff5900;
+    background-color: #ff5900;
+    color: #fff;
+    border-radius: 5px;
+    width: 100%;
+    height: 3rem;
+    margin-top: 1rem;
+    font-weight: 700;
+}
+
+.btn-anahuac:hover{
+    background-color: #fff;
+    color: #ff5900;
+}
+
+a, a:hover{
+    color: #ff5900;
+}
