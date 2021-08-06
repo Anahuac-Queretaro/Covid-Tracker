@@ -23,7 +23,7 @@ docker compose build
 docker compose up -d
 ```
 
-And done, you will have running django on localhost:8000
+And done, you will have running django on `127.0.0.1:8000`
 
 ### Develop
 To run django and python commands you'll have to enter the containers like this:
@@ -63,17 +63,22 @@ pip install -r requirements.txt
 Before running the application you will need a .env file with your local variables.
 You can copy the contents of .env.example.
 ```
+# Enter django app folder
+cd app
+
+# Create .env file
 cp .env.example .env
 ```
+Ask your administrator for _SECRET_KEY_ value.
 
 ### Run migrations
 Django works with migrations for database control, so you'll need to run them.
 ```
-python app/manage.py migrate
+python manage.py migrate
 ```
 
 ### Run app
 
 ```
-python app/manage.py runserver 0.0.0.0:8000
+python manage.py runserver 0.0.0.0:8000
 ```
