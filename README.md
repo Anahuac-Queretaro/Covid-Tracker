@@ -1,4 +1,5 @@
 # Covid-Tracker
+
 Repository for a tool that will help tracking the Covid-19 spread in the school
 
 ## How to contribute?
@@ -82,3 +83,4 @@ python manage.py migrate
 ```
 python manage.py runserver 0.0.0.0:8000
 ```
+

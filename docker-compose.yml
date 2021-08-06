@@ -14,11 +14,14 @@ services:
              python manage.py runserver 0.0.0.0:8000"
     environment:
       - SECRET_KEY=123
+      - DEBUG=True
+      - TIMEZONE=America/Mexico_City
       - DATABASE_NAME=covid_tracker
       - DATABASE_USER=postgres
       - DATABASE_PASSWORD=postgres
       - DATABASE_HOST=db
       - DATABASE_PORT=5432
+      - COVERALLS_REPO_TOKEN=${COVERALLS_REPO_TOKEN}
     depends_on:
       - db
 
