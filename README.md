@@ -13,7 +13,7 @@ After that you can start cloning your repository.
 git clone git@github.com:Anahuac-Queretaro/Covid-Tracker.git 
 ```
 
-## Run development environment with docker
+## Run development environment with docker (recommended)
 
 ```
 # Build the services
@@ -31,7 +31,7 @@ To run django and python commands you'll have to enter the containers like this:
 # Enter sh shell
 docker compose exec app sh
 ```
-This will open you the shell on the container and you will be able to run your python commands like this:
+This will open you the "sh" shell on the container and you will be able to run your python commands like this:
 
 ```
 # Running migrations example
@@ -59,11 +59,21 @@ source ./[name of folder]/bin/activate
 ```
 pip install -r requirements.txt
 ```
+### Set env variables
+Before running the application you will need a .env file with your local variables.
+You can copy the contents of .env.example.
+```
+cp .env.example .env
+```
+
+### Run migrations
+Django works with migrations for database control, so you'll need to run them.
+```
+python app/manage.py migrate
+```
+
 ### Run app
 
 ```
-python manage.py runserver 0.0.0.0:8000
+python app/manage.py runserver 0.0.0.0:8000
 ```
-
----
-This is a project for Anahuac University :)
