@@ -13,21 +13,35 @@ services:
              python manage.py migrate &&
              python manage.py runserver 0.0.0.0:8000"
     environment:
-      - SECRET_KEY=123
-      - DEBUG=True
-      - TIMEZONE=America/Mexico_City
-      - DATABASE_NAME=covid_tracker
-      - DATABASE_USER=postgres
-      - DATABASE_PASSWORD=postgres
+      - SECRET_KEY=${SECRET_KEY}
+      - DEBUG=${DEBUG}
+      - TIMEZONE=${TIMEZONE}
+      - DATABASE_NAME=${DATABASE_NAME}
+      - DATABASE_USER=${DATABASE_USER}
+      - DATABASE_PASSWORD=${DATABASE_PASSWORD}
       - DATABASE_HOST=db
-      - DATABASE_PORT=5432
+      - DATABASE_PORT=${DATABASE_PORT}
       - COVERALLS_REPO_TOKEN=${COVERALLS_REPO_TOKEN}
     depends_on:
       - db
-
+      - redis
+  celery:
+    build: .
+    command: >
+      sh -c "celery -A covid_tracker worker -l INFO"
+    volumes:
+      - ./app:/app
+    environment:
+      - CELERY_BROKER=${CELERY_BROKER}
+      - CELERY_BACKEND=${CELERY_BACKEND}
+    depends_on:
+      - app
+      - redis
+  redis:
+        image: "redis:alpine"
   db:
     image: postgres:10-alpine
     environment:
-      - POSTGRES_DB=covid_tracker
-      - POSTGRES_USER=postgres
-      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_DB=${DATABASE_NAME}
+      - POSTGRES_USER=${DATABASE_USER}
+      - POSTGRES_PASSWORD=${DATABASE_PASSWORD}
