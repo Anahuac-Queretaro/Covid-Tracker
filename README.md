@@ -14,6 +14,17 @@ After that you can start cloning your repository.
 git clone git@github.com:Anahuac-Queretaro/Covid-Tracker.git 
 ```
 
+### Set env variables
+Before running the application you will need a .env file with your local variables.
+You can copy the contents of .env.example.
+```
+# Enter django app folder
+cd app
+
+# Create .env file
+cp .env.example .env
+```
+
 ## Run development environment with docker (recommended)
 
 ```
@@ -21,10 +32,10 @@ git clone git@github.com:Anahuac-Queretaro/Covid-Tracker.git
 docker compose build
 
 # lift the containers
-docker compose up -d
+docker compose --env-file app/.env up -d
 ```
 
-And done, you will have running django on `127.0.0.1:8000`
+And done, you will have running django on `localhost:8000`
 
 ### Develop
 To run django and python commands you'll have to enter the containers like this:
@@ -35,8 +46,8 @@ docker compose exec app sh
 This will open you the "sh" shell on the container and you will be able to run your python commands like this:
 
 ```
-# Running migrations example
-python manage.py migrate
+# Executing shell example
+python manage.py shell
 ```
 
 ## Run development environment without docker
@@ -60,17 +71,6 @@ source ./[name of folder]/bin/activate
 ```
 pip install -r requirements.txt
 ```
-### Set env variables
-Before running the application you will need a .env file with your local variables.
-You can copy the contents of .env.example.
-```
-# Enter django app folder
-cd app
-
-# Create .env file
-cp .env.example .env
-```
-Ask your administrator for _SECRET_KEY_ value.
 
 ### Run migrations
 Django works with migrations for database control, so you'll need to run them.
