@@ -1,4 +1,5 @@
 import pytz
+from datetime import datetime
 
 from django.utils.translation import gettext_lazy as _
 from django import forms
@@ -34,7 +35,7 @@ class RegisterAttendanceForm(forms.ModelForm):
         if entry_datetime >= exit_datetime:
             self.add_error(
                 'entry_datetime',
-                'La fecha de salida no puede ser menor o igual que la fecha de entrada'
+                _('La fecha de salida no puede ser menor o igual que la fecha de entrada')
             )
 
         start_date_between_another = Q(
@@ -76,7 +77,7 @@ class RegisterAttendanceForm(forms.ModelForm):
                                       f'{entry_datetime_with_tz} - {exit_datetime_with_tz}')
             self.add_error(
                 'entry_datetime',
-                f'Ya existe un registro que coincide con ese lapso de tiempo: {attendance_record_info}'
+                _(f'Ya existe un registro que coincide con ese lapso de tiempo: {attendance_record_info}')
             )
 
         return cleaned_data
@@ -99,7 +100,7 @@ class InternalRegisterAttendanceForm(RegisterAttendanceForm):
         if email_domain != 'anahuac.mx':
             self.add_error(
                 'attendee_email',
-                'El correo electrónico no es válido. Si no cuentas con un correo de la Anáhuac, usa el registro para invitados'
+                _('El correo electrónico no es válido. Si no cuentas con un correo de la Anáhuac, usa el registro para invitados')
             )
 
 
@@ -111,3 +112,36 @@ class ExternalRegisterAttendanceForm(RegisterAttendanceForm):
             'attendee_email': _('Correo electrónico'),
             'exit_datetime': _('Hora de salida aproximada (¿a qué hora estimas salir?')
         }
+
+
+class AlertForm(forms.Form):
+    email = forms.EmailField(
+            widget=forms.EmailInput(
+                attrs={
+                    'class': 'form-control',
+                }
+            ),
+            label=_('Correo electrónico con el que registraste asistencia')
+        )
+    exposure_date = forms.DateField(
+        widget=forms.DateInput(
+            attrs={
+                'class': 'form-control',
+                'type': 'date',
+            }
+        ),
+        label=_('Fecha en la que estuviste expuesto (desde cuándo crees que pudiste haber transmitido el virus)'),
+    )
+
+    def clean(self):
+        cleaned_data = super().clean()
+        exposure_date = cleaned_data.get('exposure_date')
+
+        current_timezone = pytz.timezone(settings.TIME_ZONE)
+        todays_date = datetime.now(current_timezone)
+
+        if exposure_date > todays_date.date():
+            self.add_error(
+                'exposure_date',
+                _('La fecha de exposición no puede ser mayor a hoy')
+            )
