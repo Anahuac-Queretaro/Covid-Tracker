@@ -1,0 +1,54 @@
+{% extends 'base.html' %}
+
+{% block title %}Alerta Covid{% endblock title %}
+
+{% block custom_styles %}
+{% load static %}
+<link rel="stylesheet" href="{% static 'tracking/styles.css' %}">
+{% endblock custom_styles %}
+
+{% block body %}
+
+    <div class="offset-2 col-8 content">
+        <img src="{% static 'tracking/img/anahuac.png' %}" alt="LOGO ANÁHUAC" class="a-header">
+        <p class="offset-3 col-6 text-center mt-2 header">Programa de Regreso Seguro a Campus</p>
+        <hr/>
+    </div>
+
+
+    <div class="offset-2 col-8 content">
+        {% if messages %}
+                {% for message in messages %}
+                    {% if message.tags == 'success' %}
+                        <div class="alert alert-success text-center" role="alert">
+                            {{message}}
+                        </div>
+                    {% endif %}
+                    {% if message.tags == 'error' %}
+                        <div class="alert alert-danger text-center" role="alert">
+                            {{message}}
+                        </div>
+                    {% endif %}
+                {% endfor %}
+        {% endif %}
+
+        <h1>Levantar una alerta</h1>
+
+        <form method="post">
+            {% csrf_token %}
+            {% for field in form %}
+                <div class="form-group">
+                    {{ field.label_tag }} 
+                    {{ field }}
+                    {% if field.help_text %}
+                    <p class="help">{{ field.help_text|safe }}</p>
+                    {% endif %}
+                </div>
+            {% endfor %}
+            <button type="submit" class="btn-anahuac">Alertar</button>
+        </form>
+    </div>
+
+<img src="{% static 'tracking/img/leo.png' %}">
+
+{% endblock body %}

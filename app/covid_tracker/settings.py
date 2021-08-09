@@ -141,5 +141,13 @@ STATICFILES_DIRS = [
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 # Celery
-CELERY_BROKER_URL = env.str("CELERY_BROKER", default="redis://redis:6379/0")
-CELERY_RESULT_BACKEND = env.str("CELERY_BACKEND", default="redis://redis:6379/0")
+CELERY_BROKER_URL = env.str('CELERY_BROKER', default='redis://redis:6379/0')
+CELERY_RESULT_BACKEND = env.str('CELERY_BACKEND', default='redis://redis:6379/0')
+
+# Email settings
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = env('EMAIL_HOST')
+EMAIL_USE_TLS = env.bool('EMAIL_USE_TLS', True)
+EMAIL_PORT = env.int('EMAIL_PORT', 587)
+EMAIL_HOST_USER = env('EMAIL_HOST_USER')
+EMAIL_HOST_PASSWORD = env('EMAIL_HOST_PASSWORD')
